@@ -131,7 +131,8 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             
             String selection = null;
             String[] selectionArgs = null;
-            String sortOrder = Media.ALBUM + " ASC";
+            //String sortOrder = Media.ALBUM + " ASC";
+            String sortOrder = MediaStore.Audio.Albums.ALBUM + " COLLATE NOCASE ASC";
 
             Cursor psCursor = contentResolver.query(psUri, proj, selection, selectionArgs, sortOrder);
 
