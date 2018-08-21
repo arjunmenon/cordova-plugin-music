@@ -4,7 +4,7 @@ This plugin provides the ability to retrieve songs list, playlist, songs from pl
 
 ## Installation
 
-    cordova plugin add https://github.com/hafizbilal112/cordova-plugin-music
+    cordova plugin add https://github.com/arjunmenon/cordova-plugin-music
 
 ## Supported Platforms
 
@@ -14,6 +14,8 @@ This plugin provides the ability to retrieve songs list, playlist, songs from pl
 ### Methods
 
 - [`window.cordova.plugins.Music.getSongs`](#windowcordovapluginsmusicgetsongs): Returns the list of songs.
+
+- [`window.cordova.plugins.Music.getAlbums`](#windowcordovapluginsmusicgetalbums): Returns the list of albums.
 
 - [`window.cordova.plugins.Music.getPlaylists`](#windowcordovapluginsmusicgetplaylists): Returns the list of playlists.
 
@@ -31,6 +33,21 @@ Returns the list of songs.
         // success callback
         function (list) {
             console.log("songs length" + list.length);
+        },
+        // error callback
+        function (e) {
+            console.log("Error getting message=" + e);
+        }
+    );
+    
+## window.cordova.plugins.Music.getAlbums
+
+Returns the list of albums. _(only Android)_
+
+    window.cordova.plugins.Music.getAlbums(
+        // success callback
+        function (list) {
+            console.log("albums length" + list.length);
         },
         // error callback
         function (e) {
