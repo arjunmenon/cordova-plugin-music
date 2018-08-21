@@ -125,7 +125,8 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
         }
         else if (action.equals("getAlbums")) {
             ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
-            String[] proj = new String[] { Albums._ID, Albums.ALBUM, Albums.ARTIST, Albums.ALBUM_ART, Albums.NUMBER_OF_SONGS };
+            //String[] proj = new String[] { Albums._ID, Albums.ALBUM, Albums.ARTIST, Albums.ALBUM_ART, Albums.NUMBER_OF_SONGS };
+            String[] proj = {"*"};
             Uri psUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
             
             String selection = null;
