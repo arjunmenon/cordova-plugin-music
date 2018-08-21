@@ -7,6 +7,7 @@ import android.media.MediaPlayer.OnCompletionListener;
 import android.media.MediaPlayer.OnPreparedListener;
 import android.net.Uri;
 import android.provider.MediaStore;
+import android.content.ContentUris;
 
 import org.apache.cordova.CallbackContext;
 import org.apache.cordova.CordovaPlugin;
