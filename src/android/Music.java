@@ -101,7 +101,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 return false;
             }
             
-            private final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
+            final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
 
             JSONArray psRes = new JSONArray();
 
