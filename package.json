@@ -1,0 +1,27 @@
+
+{
+  "name": "com.cordova.music",
+  "version": "0.2.1",
+  "description": "A Cordova plugin to retrieve audio media",
+  "main": "music.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjunmenon/cordova-plugin-music.git"
+  },
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova",
+    "music",
+    "media"
+  ],
+  "author": "Arjun Menon",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/arjunmenon/cordova-plugin-music/issues"
+  },
+  "homepage": "https://github.com/arjunmenon/cordova-plugin-music#readme"
+}
