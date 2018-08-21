@@ -41,6 +41,17 @@ Music.getSongs = function (success, fail) {
 };
 
 /**
+ * getAlbums
+ *
+ * @param {Function} successCallback
+ * @param {Function} errorCallback
+ * @return {Array} An object of key/value pairs of all Albums.
+ */
+Music.getAlbums = function (success, fail) {
+    exec(success, fail, 'Music', 'getAlbums', []);
+};
+
+/**
  * playSong
  *
  * @param {int} id
