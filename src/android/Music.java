@@ -96,7 +96,8 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
             
             String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-            Cursor psCursor = contentResolver.query(psUri, proj, selection, null, null);
+            String sortOrder = MediaStore.Audio.Media.TITLE + " COLLATE NOCASE ASC";
+            Cursor psCursor = contentResolver.query(psUri, proj, selection, null, sortOrder);
 
             if(psCursor == null){
                 return false;
