@@ -93,12 +93,15 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
             String[] proj = {"*"};
             Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
-
-            Cursor psCursor = contentResolver.query(psUri, proj, null, null, null);
+            
+            String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+            Cursor psCursor = contentResolver.query(psUri, proj, selection, null, null);
 
             if(psCursor == null){
                 return false;
             }
+            
+            private final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
 
             JSONArray psRes = new JSONArray();
 
@@ -106,6 +109,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             {
                 psCursor.moveToPosition(i);
                 JSONObject r = new JSONObject();
+                int albumId = psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
                 r.put("id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media._ID))));
                 r.put("name", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.TITLE))));
                 r.put("artist", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
@@ -113,9 +117,10 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 r.put("path", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
                 r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
                 r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
-                r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
+                //r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
                 r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
                 r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
+                r.put("cover_art", ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)));
                 psRes.put(i,r);
             }
             if(psCursor != null)
