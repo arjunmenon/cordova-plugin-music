@@ -111,6 +111,44 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 r.put("artist", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
                 //System.out.println(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
                 r.put("path", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
+                r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
+                r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
+                r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
+                r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
+                psRes.put(i,r);
+            }
+            if(psCursor != null)
+                psCursor.close();
+            callbackContext.success(psRes);
+            return true;
+        }
+        else if (action.equals("getAlbums")) {
+            ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
+            String[] proj = new String[] { Albums._ID, Albums.ALBUM, Albums.ARTIST, Albums.ALBUM_ART, Albums.NUMBER_OF_SONGS };
+            Uri psUri = MediaStore.Audio.Albums.EXTERNAL_CONTENT_URI;
+            
+            String selection = null;
+            String[] selectionArgs = null;
+            String sortOrder = Media.ALBUM + " ASC";
+
+            Cursor psCursor = contentResolver.query(psUri, proj, selection, selectionArgs, sortOrder);
+
+            if(psCursor == null){
+                return false;
+            }
+
+            JSONArray psRes = new JSONArray();
+
+            for(int i = 0; i < psCursor.getCount() ; i++)
+            {
+                psCursor.moveToPosition(i);
+                JSONObject r = new JSONObject();
+                r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Albums._ID))));
+                r.put("album_name", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM))));
+                r.put("album_artist", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Albums.ARTIST))));
+                r.put("album_art", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Albums.ALBUM_ART))));
+                r.put("album_total_tracks", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Albums.NUMBER_OF_SONGS))));
                 psRes.put(i,r);
             }
             if(psCursor != null)
