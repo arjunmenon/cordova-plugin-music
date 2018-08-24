@@ -120,7 +120,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
                 r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
                 //r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
-                String cursorTime = Integer.valueOf(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                Long cursorTime = Long.valueOf(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
                 String time = millisecondsToTime(cursorTime);
                 r.put("duration", time);
                 //r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
