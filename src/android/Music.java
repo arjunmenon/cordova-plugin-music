@@ -195,7 +195,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
             
             String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-            String sortOrder = MediaStore.Audio.Media.DATE_ADDED + " COLLATE NOCASE ASC";
+            String sortOrder = MediaStore.Audio.Media.DATE_ADDED;
             Cursor psCursor = contentResolver.query(psUri, proj, selection, null, sortOrder);
 
             if(psCursor == null){
@@ -259,7 +259,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
             
             String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
-            String sortOrder = MediaStore.Audio.Media.DATE_MODIFIED + " COLLATE NOCASE ASC";
+            String sortOrder = MediaStore.Audio.Media.DATE_MODIFIED;
             Cursor psCursor = contentResolver.query(psUri, proj, selection, null, sortOrder);
 
             if(psCursor == null){
