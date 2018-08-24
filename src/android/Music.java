@@ -270,7 +270,7 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
 
             JSONArray psRes = new JSONArray();
 
-            for(int i = 0; i < 20 ; i++)
+            for(int i = 0; i < 10 ; i++)
             {
                 psCursor.moveToPosition(i);
                 JSONObject r = new JSONObject();
