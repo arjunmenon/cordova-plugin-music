@@ -120,7 +120,9 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
                 r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
                 //r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
-                r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                String time = millisecondsToTime(psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION));
+                r.put("duration", time);
+                //r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
                 r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
                 r.put("cover_art", ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)));
                     Cursor cursor = null;
@@ -254,6 +256,20 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
     public void onPrepared(MediaPlayer player) {
         // Listener for playback completion
         this.player.setOnCompletionListener(this);
+    }
+    
+    public String millisecondsToTime(long milliseconds) {
+        long minutes = (milliseconds / 1000) / 60;
+        long seconds = (milliseconds / 1000) % 60;
+        String secondsStr = Long.toString(seconds);
+        String secs;
+        if (secondsStr.length() >= 2) {
+            secs = secondsStr.substring(0, 2);
+        } else {
+            secs = "0" + secondsStr;
+        }
+
+        return minutes + ":" + secs;
     }
 
 }
