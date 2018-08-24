@@ -189,6 +189,134 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
             callbackContext.success(psRes);
             return true;
         }
+        else if (action.equals("getRecentlyAdded")) {
+            ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
+            String[] proj = {"*"};
+            Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+            
+            String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+            String sortOrder = MediaStore.Audio.Media.DATE_ADDED + " COLLATE NOCASE ASC";
+            Cursor psCursor = contentResolver.query(psUri, proj, selection, null, sortOrder);
+
+            if(psCursor == null){
+                return false;
+            }
+            
+            final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
+
+            JSONArray psRes = new JSONArray();
+
+            for(int i = 0; i < 20 ; i++)
+            {
+                psCursor.moveToPosition(i);
+                JSONObject r = new JSONObject();
+                int albumId = psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
+                r.put("id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media._ID))));
+                r.put("name", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.TITLE))));
+                r.put("artist", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
+                //System.out.println(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
+                r.put("path", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
+                r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
+                r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
+                //r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
+                Long cursorTime = Long.valueOf(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                String time = millisecondsToTime(cursorTime);
+                r.put("duration", time);
+                //r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                r.put("cover_art", ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)));
+                r.put("date_added", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_ADDED))));
+                r.put("date_modified", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED))));
+                r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
+                
+                    Cursor cursor = null;
+                    try {                        
+                        String[] proj2 = { MediaStore.Images.Media.DATA };
+                        cursor = contentResolver.query(ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)), proj2, null, null, null);
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        //return cursor.getString(column_index);
+                        if(cursor.getCount() > 0){
+                            r.put("real_cover_art", cursor.getString(column_index));
+                        } else {
+                            r.put("real_cover_art", "null");
+                        }
+                    } finally {
+                        if (cursor != null) {
+                            cursor.close();
+                        }
+                    }
+                
+                psRes.put(i,r);
+            }
+            if(psCursor != null)
+                psCursor.close();
+            callbackContext.success(psRes);
+            return true;
+        }
+        else if (action.equals("getRecentlyAddedM")) {
+            ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
+            String[] proj = {"*"};
+            Uri psUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
+            
+            String selection = MediaStore.Audio.Media.IS_MUSIC + " != 0";
+            String sortOrder = MediaStore.Audio.Media.DATE_MODIFIED + " COLLATE NOCASE ASC";
+            Cursor psCursor = contentResolver.query(psUri, proj, selection, null, sortOrder);
+
+            if(psCursor == null){
+                return false;
+            }
+            
+            final Uri albumArtUri = Uri.parse("content://media/external/audio/albumart");
+
+            JSONArray psRes = new JSONArray();
+
+            for(int i = 0; i < 20 ; i++)
+            {
+                psCursor.moveToPosition(i);
+                JSONObject r = new JSONObject();
+                int albumId = psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID);
+                r.put("id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media._ID))));
+                r.put("name", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.TITLE))));
+                r.put("artist", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ARTIST))));
+                //System.out.println(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
+                r.put("path", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATA))));
+                r.put("album", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM))));
+                r.put("album_id", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_ID))));
+                //r.put("album_key", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.ALBUM_KEY))));
+                Long cursorTime = Long.valueOf(psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                String time = millisecondsToTime(cursorTime);
+                r.put("duration", time);
+                //r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
+                r.put("cover_art", ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)));
+                r.put("date_added", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_ADDED))));
+                r.put("date_modified", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED))));
+                r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
+                
+                    Cursor cursor = null;
+                    try {                        
+                        String[] proj2 = { MediaStore.Images.Media.DATA };
+                        cursor = contentResolver.query(ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)), proj2, null, null, null);
+                        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+                        cursor.moveToFirst();
+                        //return cursor.getString(column_index);
+                        if(cursor.getCount() > 0){
+                            r.put("real_cover_art", cursor.getString(column_index));
+                        } else {
+                            r.put("real_cover_art", "null");
+                        }
+                    } finally {
+                        if (cursor != null) {
+                            cursor.close();
+                        }
+                    }
+                
+                psRes.put(i,r);
+            }
+            if(psCursor != null)
+                psCursor.close();
+            callbackContext.success(psRes);
+            return true;
+        }
         else if (action.equals("playSong")) {
             ContentResolver contentResolver =this.cordova.getActivity().getContentResolver();
             String songID = args.getString(0);
