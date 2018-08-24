@@ -124,8 +124,11 @@ public class Music  extends CordovaPlugin implements OnCompletionListener, OnPre
                 String time = millisecondsToTime(cursorTime);
                 r.put("duration", time);
                 //r.put("duration", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DURATION))));
-                r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
                 r.put("cover_art", ContentUris.withAppendedId(albumArtUri, psCursor.getLong(albumId)));
+                r.put("date_added", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_ADDED))));
+                r.put("date_modified", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.DATE_MODIFIED))));
+                r.put("is_music", psCursor.getString((psCursor.getColumnIndex(MediaStore.Audio.Media.IS_MUSIC))));
+                
                     Cursor cursor = null;
                     try {                        
                         String[] proj2 = { MediaStore.Images.Media.DATA };
