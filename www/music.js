@@ -51,6 +51,14 @@ Music.getAlbums = function (success, fail) {
     exec(success, fail, 'Music', 'getAlbums', []);
 };
 
+Music.getRecentlyAdded = function (success, fail) {
+    exec(success, fail, 'Music', 'getRecentlyAdded', []);
+};
+
+Music.getRecentlyAddedM = function (success, fail) {
+    exec(success, fail, 'Music', 'getRecentlyAddedM', []);
+};
+
 /**
  * playSong
  *
